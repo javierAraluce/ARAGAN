@@ -8,26 +8,26 @@ Los datos han sido sacados a 10 Hz del dataset
   * BDDA
       * test
         * camera_images
-        * camera_videos
-        * gasemap_images
         * gazemap_images_resized
-        * gazemap_videos
-        * gps_jsons
+
       * training
         * camera_images
-        * camera_videos
-        * gasemap_images
         * gazemap_images_resized
-        * gazemap_videos
-        * gps_jsons
+
       * validation
         * camera_images
-        * camera_videos
-        * gasemap_images
         * gazemap_images_resized
-        * gazemap_videos
-        * gps_jsons
 
+    * DADA2000
+      * test
+        * camera_images
+        * gazemap_images_resized
+      * training
+        * camera_images
+        * gazemap_images_resized
+      * validation
+        * camera_images
+        * gazemap_images_resized
 
 If you used our work, please cite us:
 
