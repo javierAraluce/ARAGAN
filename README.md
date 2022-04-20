@@ -5,13 +5,28 @@ Code will be upload when the paper is published
 Los datos han sido sacados a 10 Hz del dataset 
 
 * dataset
-  * BDD-OIA
-      * data_images
-      * data_videos
-      * json
-  * lastframe
-      * data
-      * json
+  * BDDA
+      * test
+        * camera_images
+        * camera_videos
+        * gasemap_images
+        * gazemap_images_resized
+        * gazemap_videos
+        * gps_jsons
+      * training
+        * camera_images
+        * camera_videos
+        * gasemap_images
+        * gazemap_images_resized
+        * gazemap_videos
+        * gps_jsons
+      * validation
+        * camera_images
+        * camera_videos
+        * gasemap_images
+        * gazemap_images_resized
+        * gazemap_videos
+        * gps_jsons
 
 
 If you used our work, please cite us:
