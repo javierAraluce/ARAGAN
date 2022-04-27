@@ -2,10 +2,12 @@ from tqdm import tqdm
 import os
 import shutil
 from PIL import Image
+import argparse
 
-def main_rgb():
+def main_rgb(args):
+    dataset_set = args.dataset_set
     PATH_dataset_DADA = 'dataset/DADA2000/'
-    dada_path = str(PATH_dataset_DADA + 'testing/')
+    dada_path = str(PATH_dataset_DADA + dataset_set + '/')
     
 
     for category in tqdm(range(1, 54)):
@@ -22,9 +24,10 @@ def main_rgb():
                 # print(path_file)
                 # print(path_destination)
         
-def main_gaze_map():
+def main_gaze_map(args):
+    dataset_set = args.dataset_set
     PATH_dataset_DADA = 'dataset/DADA2000/'
-    dada_path = str(PATH_dataset_DADA + 'testing/')
+    dada_path = str(PATH_dataset_DADA + dataset_set + '/')
     
 
     for category in tqdm(range(1, 54)):
@@ -50,5 +53,11 @@ def main_gaze_map():
 
 
 if __name__ == "__main__":
-    # main_rgb()
-    main_gaze_map()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--dataset_set',
+        type=str,
+        default='training',
+        help='the directory that contains videos to parse')
+    args = parser.parse_args()
+    main_rgb(args)
+    main_gaze_map(args)

@@ -12,7 +12,6 @@ from matplotlib import pyplot as plt
 # from IPython import display
 from tqdm import tqdm
 import numpy as np
-import resource
 
 from dataloader_pipeline import Dataloader
 from models import Models

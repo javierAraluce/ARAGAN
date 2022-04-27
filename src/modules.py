@@ -148,7 +148,7 @@ class Modules(object):
     def downsample(self, 
                    filters: int, 
                    size: int, 
-                   apply_batchnorm: bool = True , 
+                   apply_batchnorm: bool = True, 
                    apply_dropout: bool = False, 
                    dropout: float = 0.5,
                    activator: str = 'leaky_relu',

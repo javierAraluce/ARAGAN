@@ -19,7 +19,7 @@ ARAGAN has been trained in BDDA and tested in BDDA and DADA2000, which are two o
 				
 ## Requirements
  
-This Repository has been tested using Tensorflow 2.4 and CUDA 11.0 and CUDNN 8
+This Repository has been tested using `Tensorflow=2.4` and `CUDA=11.0`, `CUDNN=8`
 ```bash
 pip3 install -r requiriments.txt
 ```
@@ -127,9 +127,6 @@ Dataset structure have to be in the following way to work with the code:
 
 
 				
-				
-
-
 
 ## Parameters.
 				
@@ -137,23 +134,23 @@ Dataset structure have to be in the following way to work with the code:
 				
 				
 ## Description
-				
 
-					
-Explicación detallada del repositorio que incluya las funciones / módulos/clases principales del código.
-				
+To train the model you will have to launch:
+
+```bash
+python3 src/train.py
+```
+The script will ask you to set the Generator that you want to Train from a list 		
 				
 				
 ## Results
 				
-
-					
-(si los tiene)
-				
+<!-- ![medirl](https://github.com/javierAraluce/ARAGAN/blob/master/figures/paper8.png) -->
 				
 				
 ## Future Works
-				
+
+Test these architecture in other image to image applications like semantic segmentaion, depth estimation. 
 ## Bibliography.
 			
 			
