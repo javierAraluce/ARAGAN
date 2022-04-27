@@ -7,6 +7,8 @@
 [Javier Araluce](javier.araluce@uah.es), [Luis Miguel Bergasa](luism.bergasa@uah.es), [Manuel Ocaña](mocana@depeca.uah.es), [Rafael Barea](rafael.barea@uah.es), [Elena López-Guillén](elena.lopezg@uah.es)  and [Pedro Revenga](pedro.revenga@uah.es)
 
 ## Overview
+
+![framework](https://github.com/javierAraluce/ARAGAN/blob/main/figures/ARAGAN-Framework.drawio.png)
 Predicting driver’s attention in complex driving scenarios is becoming a hot topic due to it helps the design of some autonomous driving tasks, optimizing visual scene understanding and contributing knowledge to the decision making.
 We introduce ARAGAN, a driver attention estimation model based on a conditional Generative Adversarial Network (cGAN). 
 This architecture uses some of the most challenging and novel deep learning techniques to develop this task.
@@ -140,10 +142,15 @@ To train the model you will have to launch:
 ```bash
 python3 src/train.py
 ```
-The script will ask you to set the Generator that you want to Train from a list, these Generators will be build with these blocks, to further analysis go to the paper:
+The script will ask you to set the Generator that you want to Train from a list, these Generators will be built with these blocks as the downsample section, to further analysis go to the paper:
 
 ![cbam](https://github.com/javierAraluce/ARAGAN/blob/main/figures/ARAGAN-Cbam.drawio.png)
-				
+
+![resBlock](https://github.com/javierAraluce/ARAGAN/blob/main/figures/ARAGAN-Down_resBlock.drawio.png)
+
+![sa](https://github.com/javierAraluce/ARAGAN/blob/main/figures/ARAGAN-google_attention.drawio.png)
+
+![mha](https://github.com/javierAraluce/ARAGAN/blob/main/figures/ARAGAN-Multi-Head.drawio.png)
 				
 ## Results
 				
