@@ -140,12 +140,14 @@ To train the model you will have to launch:
 ```bash
 python3 src/train.py
 ```
-The script will ask you to set the Generator that you want to Train from a list 		
+The script will ask you to set the Generator that you want to Train from a list, these Generators will be build with these blocks, to further analysis go to the paper:
+
+![cbam](https://github.com/javierAraluce/ARAGAN/blob/main/figures/ARAGAN-Cbam.drawio.png)
 				
 				
 ## Results
 				
-<!-- ![medirl](https://github.com/javierAraluce/ARAGAN/blob/master/figures/paper8.png) -->
+ 
 				
 				
 ## Future Works
