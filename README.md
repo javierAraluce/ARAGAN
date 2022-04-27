@@ -15,63 +15,60 @@ Adversarial mechanism learns to map an attention image from an RGB traffic image
  
 An ablation study with different architectures has been carried out, obtained the results in terms of some saliency metrics. Besides, a comparison with other state-of-the-art models has been driven, outperforming results in accuracy and performance, and showing that our proposal is adequate to be used on real-time applications. 
 ARAGAN has been trained in BDDA and tested in BDDA and DADA2000, which are two of the most complex driver attention datasets available for research. 			
-
-
-					
-Los implicados actualmente
-					
-Si existen diferentes versiones o se ha heredado de otras personas.
-				
 				
 				
 ## Requirements
-				
-## Inputs and Outputs of the layer / module.
-
-
+ 
+This Repository has been tested using Tensorflow 2.4 and CUDA 11.0 and CUDNN 8
+```bash
+pip3 install -r requiriments.txt
+```
+### TODO
+- [] Build a DockerFile for this repository
+- [] Upload a docker image to DokerHub 
 
 ### BDDA Dataset
 Images have been sampled at 10 Hz from the videos obtained from https://bdd-data.berkeley.edu/. Click on the "Download Dataset" to get to the user portal and then you will find the BDD-Attention dataset
 #### Training set parser
-Parse RGB videos
+- Parse RGB videos
 ```bash
 python3 src/data/parse_videos.py --video_dir dataset/BDDA/training/camera_videos --image_dir dataset/BDDA/training/camera_images/all_images
 ```
-Parse Attention maps videos
+- Parse Attention maps videos
 ```bash
 python3 src/data/parse_videos.py --video_dir dataset/BDDA/training/gazemap_videos --image_dir dataset/BDDA/training/camera_images/gazemap_images
 ```
-Resized attention map images
+- Resized attention map images
 ```bash
 python3 src/data/gaze_map_image_normalization.py --image_dir dataset/BDDA/training/gazemap_videos --image_dir_resized dataset/BDDA/training/camera_images/gazemap_images_resized
 ```
 
 
 #### Validation set parser
-Parse RGB videos
+- Parse RGB videos
 ```bash
 python3 src/data/parse_videos.py --video_dir dataset/BDDA/validation/camera_videos --image_dir dataset/BDDA/validation/camera_images/all_images
 ```
-Parse Attention maps videos
+- Parse Attention maps videos
 ```bash
 python3 src/data/parse_videos.py --video_dir dataset/BDDA/validation/gazemap_videos --image_dir dataset/BDDA/validation/camera_images/gazemap_images
 ```
-Resized attention map images
+- Resized attention map images
 ```bash
 python3 src/data/gaze_map_image_normalization.py --image_dir dataset/BDDA/validation/gazemap_videos --image_dir_resized dataset/BDDA/validation/camera_images/gazemap_images_resized
 ```
 
 #### Testing set parser
 
-Parse RGB videos
+- Parse RGB videos
 ```bash
 python3 src/data/parse_videos.py --video_dir dataset/BDDA/tes/camera_videos --image_dir dataset/BDDA/tes/camera_images/all_images
 ```
-Parse Attention maps videos
+- Parse Attention maps videos
 ```bash
 python3 src/data/parse_videos.py --video_dir dataset/BDDA/tes/gazemap_videos --image_dir dataset/BDDA/tes/camera_images/gazemap_images
 ```
-Resized attention map images
+- Resized attention map images
 ```bash
 python3 src/data/gaze_map_image_normalization.py --image_dir dataset/BDDA/tes/gazemap_videos --image_dir_resized dataset/BDDA/tes/camera_images/gazemap_images_resized
 ```
@@ -82,6 +79,24 @@ python3 clean_data.py
 ```
 
 ### DADA-2000 Dataset
+DADA2000 dataset (about 53GB with compresed mode) can be downloaded from [here](https://pan.baidu.com/s/1RfNjeW0Rjj6R4N7beSTYrA). (Extraction code: 9pab) 
+
+#### Training set parser
+- Parse RGB and attention map videos from training set
+```bash
+python3 src/data/parse_DADA_2000_dataset.py --dataset_set training
+```
+#### Validation set parser
+- Parse RGB and attention map videos from validation set
+```bash
+python3 src/data/parse_DADA_2000_dataset.py --dataset_set validation
+```
+
+#### Testing set parser
+- Parse RGB and attention map videos from testing set
+```bash
+python3 src/data/parse_DADA_2000_dataset.py --dataset_set testing
+```
 
 ### Dataset structure 
 Dataset structure have to be in the following way to work with the code:
