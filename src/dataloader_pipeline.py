@@ -69,7 +69,8 @@ class Dataloader(object):
             input_image (tf.Tensor): RGB image
             map_image (tf.Tensor): Attention image
         Returns:
-            Tuple[tf.Tensor, tf.Tensor]: Ramdomly cropped RGB image and attention image 
+            Tuple[tf.Tensor, tf.Tensor]: Ramdomly cropped RGB image and 
+            attention image 
         '''
         stacked_image = tf.stack([input_image, map_image], axis=0)
         cropped_image = tf.image.random_crop(
@@ -105,7 +106,8 @@ class Dataloader(object):
             map_image (tf.Tensor): Attention image
 
         Returns:
-            Tuple[tf.Tensor, tf.Tensor]: Random jittering and mirroring RGB image and attention image 
+            Tuple[tf.Tensor, tf.Tensor]: Random jittering and mirroring RGB 
+            image and attention image 
         '''
         # Resizing to 286x286
         input_image, map_image = self.resize(input_image, map_image, 286, 286)

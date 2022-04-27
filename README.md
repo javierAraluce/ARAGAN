@@ -143,23 +143,35 @@ To train the model you will have to launch:
 ```bash
 python3 src/train.py
 ```
-The script will ask you to set the Generator that you want to Train from a list, these Generators will be built with these blocks as the downsample section, to further analysis go to the paper:
+The script will ask you to set the Generator that you want to Train from a list (`['CBAM', 'Resnet', 'Resnet_Attention', 'Resnet_Multi_Head_Attention', 'Unet']`), these Generators will be built with these blocks as the downsample section, to further analysis go to the paper:
+
+### Residual convolotutional module (Resblock)
+![resBlock](https://github.com/javierAraluce/ARAGAN/blob/main/figures/ARAGAN-Down_resBlock.drawio.png)
+
+### Convolutional Block Attention Module (CBAM)
 
 ![cbam](https://github.com/javierAraluce/ARAGAN/blob/main/figures/ARAGAN-Cbam.drawio.png)
 
-![resBlock](https://github.com/javierAraluce/ARAGAN/blob/main/figures/ARAGAN-Down_resBlock.drawio.png)
-
+### Self-Attention module
 ![sa](https://github.com/javierAraluce/ARAGAN/blob/main/figures/ARAGAN-google_attention.drawio.png)
 
+### Multi-Head Attention module
 ![mha](https://github.com/javierAraluce/ARAGAN/blob/main/figures/ARAGAN-Multi-Head.drawio.png)
 				
 ## Results
-				
+
+Here you can see some results of the model in different images from the BDDA testing set
+
+![bdda](https://github.com/javierAraluce/ARAGAN/blob/main/figures/images_output_bdda.png)
+
+And here other result from 
+![dada](https://github.com/javierAraluce/ARAGAN/blob/main/figures/images_output_dada.png)
  
 				
 				
 ## Future Works
 
+Train in DADA2000 and see the difference with the previous model obtained trained only in BDDA
 Test these architecture in other image to image applications like semantic segmentaion, depth estimation. 
 ## Bibliography.
 			

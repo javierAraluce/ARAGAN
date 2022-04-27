@@ -19,7 +19,12 @@ def main_rgb(args):
             images = os.listdir(path_events)
             for image in images:
                 path_file = path_events + '/' + str(image) 
-                path_destination = dada_path + 'camera_images/' + 'all_images/' + str(category) + '_' + str(event) + '_' + str(image) 
+                path_destination = dada_path 
+                path_destination += 'camera_images/'
+                path_destination += 'all_images/'
+                path_destination += str(category) + '_'
+                path_destination += str(event) + '_' 
+                path_destination += str(image)
                 shutil.copy2(path_file, path_destination)
                 # print(path_file)
                 # print(path_destination)
@@ -38,8 +43,13 @@ def main_gaze_map(args):
             path_events = path + str(event)
             images = os.listdir(path_events)
             for image in images:
-                path_file = path_events + '/' + str(image) 
-                path_destination = dada_path + 'gazemap_images_resized/' + 'all_images/' + str(category) + '_' + str(event) + '_' + str(image) 
+                path_file = path_events + '/' + str(image)
+                path_destination = dada_path 
+                path_destination += 'gazemap_images_resized/'
+                path_destination += 'all_images/'
+                path_destination += str(category) + '_'
+                path_destination += str(event) + '_' 
+                path_destination += str(image) 
                 # shutil.copy2(path_file, path_destination)
                 im = Image.open(path_file)
                 path_destination_jpg = path_destination.replace("png", "jpg")

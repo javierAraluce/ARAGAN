@@ -18,7 +18,8 @@ def parse_videos(video_dir, image_dir, parse_rate, transform_fn=None,
     
     if not overwrite:
         # collect already parsed videos
-        old_video_ids = [f.split('_')[0] for f in os.listdir(image_dir) if f.endswith('.jpg')]
+        old_video_ids = [f.split('_')[0] for f in os.listdir(image_dir) 
+                         if f.endswith('.jpg')]
     
     
     video_names = [f for f in os.listdir(video_dir) if f.endswith(video_suffix)]
