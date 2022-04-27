@@ -153,10 +153,10 @@ Explicación detallada del repositorio que incluya las funciones / módulos/clas
 If you used our work, please cite our work:
 ```bash
 @inproceedings{araluce2022aragan,  
-  title={ARAGAN: A dRiver Attention estimation model based on conditional Generative Adversarial Network},  
-  author={Araluce, Javier and Bergasa, Luis Miguel and Ocaña, Manuel, and Barea, Rafael and L{\'o}pez-Guill{\'e}n, Elena and Revenga, Pedro},  
-booktitle={2022 IEEE Intelligent Vehicles Symposium (IV)}  
-year={2022},  
-organization={IEEE}
+  title = {ARAGAN: A dRiver Attention estimation model based on conditional Generative Adversarial Network},  
+  author = {Araluce, Javier and Bergasa, Luis Miguel and Ocaña, Manuel, and Barea, Rafael and L{\'o}pez-Guill{\'e}n, Elena and Revenga, Pedro},  
+  booktitle = {2022 IEEE Intelligent Vehicles Symposium (IV)}  
+  year = {2022},  
+  organization = {IEEE}
 }
 ```
