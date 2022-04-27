@@ -9,6 +9,7 @@
 ## Overview
 
 ![framework](https://github.com/javierAraluce/ARAGAN/blob/main/figures/ARAGAN-Framework.drawio.png)
+
 Predicting driver’s attention in complex driving scenarios is becoming a hot topic due to it helps the design of some autonomous driving tasks, optimizing visual scene understanding and contributing knowledge to the decision making.
 We introduce ARAGAN, a driver attention estimation model based on a conditional Generative Adversarial Network (cGAN). 
 This architecture uses some of the most challenging and novel deep learning techniques to develop this task.
