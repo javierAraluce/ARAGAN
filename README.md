@@ -26,9 +26,7 @@ This Repository has been tested using `Tensorflow=2.4` and `CUDA=11.0`, `CUDNN=8
 ```bash
 pip3 install -r requiriments.txt
 ```
-### TODO
-- [] Build a DockerFile for this repository
-- [] Upload a docker image to DokerHub 
+
 
 ### BDDA Dataset
 Images have been sampled at 10 Hz from the videos obtained from https://bdd-data.berkeley.edu/. Click on the "Download Dataset" to get to the user portal and then you will find the BDD-Attention dataset
@@ -173,14 +171,6 @@ And here other result from
 
 Train in DADA2000 and see the difference with the previous model obtained trained only in BDDA
 Test these architecture in other image to image applications like semantic segmentaion, depth estimation. 
-## Bibliography.
-			
-			
-		
-		
-	
-	
-
 
 
 # Citing
@@ -194,3 +184,7 @@ If you used our work, please cite our work:
   organization = {IEEE}
 }
 ```
+
+## TODO
+- [] Build a DockerFile for this repository
+- [] Upload a docker image to DokerHub 
