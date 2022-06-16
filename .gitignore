@@ -131,3 +131,6 @@ dmypy.json
 dataset
 core 
 logs
+training_checkpoints/
+*.gif
+*.mp4

@@ -114,12 +114,6 @@ class Models(object):
                                       apply_dropout = False, 
                                       dropout = 0.5, 
                                       activator = 'relu'),  # (bs, 64, 64, 128)
-            self.blocks.upsample_unet(64, 
-                                      kernel_size, 
-                                      apply_batchnorm = True,
-                                      apply_dropout = False, 
-                                      dropout = 0.5,
-                                      activator = 'relu'),  # (bs, 128, 128, 64)
         ]
 
         initializer = tf.random_normal_initializer(0., 0.02)
@@ -403,12 +397,12 @@ class Models(object):
             activator = 'leaky_relu',
             stride = 1)(zero_pad1)  
         
-        attention = self.blocks.google_attention(inputs = down4,
-                                                 filters = 512,
-                                                 ratio = 8,
-                                                 kernel_size = 3)
+        # attention = self.blocks.google_attention(inputs = down4,
+        #                                          filters = 512,
+        #                                          ratio = 8,
+        #                                          kernel_size = 3)
          
-        zero_pad2 = tf.keras.layers.ZeroPadding2D()(attention) # (bs,33,33, 512)
+        zero_pad2 = tf.keras.layers.ZeroPadding2D()(down4) # (bs,33,33, 512)
 
 
         last = tf.keras.layers.Conv2D(

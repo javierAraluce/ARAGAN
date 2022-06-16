@@ -3,9 +3,17 @@ from typing import Tuple
 
 class Dataloader(object):
     def __init__(self, width: int, height: int, output_channels: int) ->None:
+        '''_summary_
+
+        Args:
+            width (int): image width sixe
+            height (int): image height size
+            output_channels (int): channels image
+        '''
         self.IMG_WIDTH = width
         self.IMG_HEIGHT = height  
         self.OUTPUT_CHANNELS = output_channels
+        # tf.config.run_functions_eagerly(True) 
 
     def load(self, image_file: str) -> Tuple[tf.Tensor, tf.Tensor]:
         '''Load dataset function
@@ -138,19 +146,43 @@ class Dataloader(object):
         input_image, map_image = self.normalize(input_image, map_image)
         return input_image, map_image
 
-    def load_image_test(self, image_file: str) -> Tuple[tf.Tensor, tf.Tensor]:
+    def load_image_test(self, image_file: str) -> Tuple[tf.Tensor, tf.Tensor, tf.Tensor]:
         '''Testing dataloader pipeline
 
         Args:
             image_file (str): Image file name
 
         Returns:
-            Tuple[tf.Tensor, tf.Tensor]: RGB image and attention image 
+            Tuple[tf.Tensor, tf.Tensor, tf.Tensor]: RGB image, attention image and video_name
         '''
         input_image, map_image = self.load(image_file)
+        input_image_raw = input_image
         input_image, map_image = self.resize(input_image, map_image,
                                         self.IMG_HEIGHT, self.IMG_WIDTH)
         input_image, map_image = self.normalize(input_image, map_image)
 
-        return input_image, map_image
+        x = tf.strings.split(image_file, sep='/', maxsplit=-1, name=None)
+        x = tf.strings.split(x[5], sep='_', maxsplit=-1, name=None)
+        video_name = x[0]
+        return input_image, map_image , video_name, input_image_raw
+    
+    def load_image_test_dada(self, image_file: str) -> Tuple[tf.Tensor, tf.Tensor, tf.Tensor]:
+        '''Testing dataloader pipeline
+
+        Args:
+            image_file (str): Image file name
+
+        Returns:
+            Tuple[tf.Tensor, tf.Tensor, tf.Tensor]: RGB image, attention image and video_name
+        '''
+        input_image, map_image = self.load(image_file)
+        input_image_raw = input_image
+        input_image, map_image = self.resize(input_image, map_image,
+                                        self.IMG_HEIGHT, self.IMG_WIDTH)
+        input_image, map_image = self.normalize(input_image, map_image)
+
+        x = tf.strings.split(image_file, sep='/', maxsplit=-1, name=None)
+        x = tf.strings.split(x[5], sep='_', maxsplit=-1, name=None)
+        video_name = x[1]
+        return input_image, map_image, video_name, input_image_raw
 

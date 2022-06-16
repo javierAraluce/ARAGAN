@@ -61,6 +61,7 @@ class ARAGAN(object):
         # Call the Generator and the Discriminator
         self.generator = eval('self.models.' + self.name + '()')
         self.discriminator = self.models.Discriminator()
+        self.discriminator.summary()
         
         # Create the BCE loss
         self.loss_object = tf.keras.losses.BinaryCrossentropy(from_logits=True)
