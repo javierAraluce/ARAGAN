@@ -1,0 +1,268 @@
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resnet_Multi_Head_Attention_8,0,1,0.106078126,0.8333767,0.73160684,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resnet_Multi_Head_Attention_8,1,1,0.12411525,0.86564875,0.7093387,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_with_LN_and_residual_13M_8,0,1,0.19555569,0.8665325,0.63723123,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_with_LN_and_residual_13M_8,1,1,0.17046863,0.8743084,0.6546535,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_with_LN_and_residual_13M_8,2,1,0.15554179,0.85491186,0.6612565,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_with_LN_and_residual_13M_8,3,1,0.14012444,0.8236363,0.67603606,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_with_LN_and_residual_13M_8,4,1,0.13119106,0.8530703,0.68851507,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_with_LN_and_residual_13M_8,5,1,0.13726988,0.8995885,0.6860509,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_with_LN_and_residual_13M_8,6,1,0.14397192,0.87086236,0.6799368,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_with_LN_and_residual_13M_8,7,1,0.14234245,0.8377157,0.68185407,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_with_LN_and_residual_13M_8,8,1,0.1353812,0.83764106,0.6882107,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_with_LN_and_residual_13M_8,9,1,0.12873831,0.8063597,0.69564867,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_with_LN_and_residual_13M_8,10,1,0.122343324,0.8404102,0.7019661,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_with_LN_and_residual_13M_8,11,1,0.11972644,0.84342325,0.7043263,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_with_LN_and_residual_13M_8,12,1,0.11631197,0.83602643,0.70759183,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_with_LN_and_residual_13M_8,13,1,0.11382774,0.86737907,0.7106252,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_with_LN_and_residual_13M_8,14,1,0.11397144,0.87980604,0.70971304,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_16,0,1,0.030670915,0.94244516,0.6891195,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_16,1,1,0.07958582,0.9674709,0.5977013,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_16,2,1,0.11407011,0.95446134,0.56383127,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_16,3,1,0.120025046,1.0081562,0.554667,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_16,4,1,0.122061044,0.9587066,0.55081487,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_16,5,1,0.14153005,0.9921218,0.54540503,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_16,6,1,0.16393061,0.93141335,0.5384238,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_16,7,1,0.17715515,1.0063175,0.5335432,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_16,8,1,0.19305626,0.98007315,0.52946633,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_16,9,1,0.20071839,0.9612478,0.5264735,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_16,10,1,0.20080632,0.9713167,0.5251582,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_16,11,1,0.2000748,0.9209188,0.5236319,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_16,12,1,0.2043684,0.9920633,0.521955,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_16,13,1,0.21040794,0.97988045,0.52050984,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_16,14,1,0.21460016,0.960304,0.519212,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_deeper_8,0,1,0.12569194,0.8742158,0.6462085,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_deeper_8,1,1,0.10835415,0.8510311,0.67318064,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_deeper_8,2,1,0.10311931,0.9715972,0.68348783,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_deeper_8,3,1,0.109387726,0.8150061,0.6805796,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_deeper_8,4,1,0.09900683,0.8478498,0.69675696,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_deeper_8,5,1,0.097977914,0.8381717,0.6983422,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_deeper_8,6,1,0.103525154,0.93067163,0.6942021,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_deeper_8,7,1,0.10236129,0.8266616,0.6945763,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_deeper_8,8,1,0.10210314,0.8807667,0.6961482,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_deeper_8,9,1,0.10320406,0.8231737,0.69677436,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_deeper_8,10,1,0.10224202,0.89520675,0.6994223,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_deeper_8,11,1,0.103995696,0.898332,0.7008654,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_deeper_8,12,1,0.10460363,0.85509443,0.7006971,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_deeper_8,13,1,0.104633026,0.8774315,0.69975746,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_80M_8,0,1,0.08432872,0.8358979,0.75090027,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_80M_8,1,1,0.09152041,0.84738714,0.741285,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_80M_8,2,1,0.08683587,0.81665784,0.73892504,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_80M_8,3,1,0.07789324,0.86430013,0.743973,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_80M_8,4,1,0.07635488,0.82503045,0.7430864,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_80M_8,5,1,0.08160495,0.88775015,0.7323839,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_80M_8,6,1,0.090619184,0.8112727,0.71939033,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_80M_8,7,1,0.09273072,0.8797141,0.7192418,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_80M_8,8,1,0.0905198,0.8262455,0.7208468,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_80M_8,9,1,0.09031644,0.9308787,0.7200848,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resnet_Multi_Head_Attention_8,0,1,0.06104624,0.8338873,0.755433,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resnet_Multi_Head_Attention_8,0,1,0.06104624,0.8338873,0.755433,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resnet_Multi_Head_Attention_8,1,1,0.07902207,0.8264129,0.73119575,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resnet_Multi_Head_Attention_8,3,1,0.037881866,0.8885027,0.82546556,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resnet_Multi_Head_Attention_8,4,1,0.048933312,0.83151263,0.7948903,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resnet_Multi_Head_Attention_8,5,1,0.056858625,0.8221223,0.770775,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resnet_Multi_Head_Attention_8,6,1,0.059709925,0.82918006,0.7597046,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resnet_Multi_Head_Attention_8,7,1,0.066261604,0.9140417,0.7478142,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resnet_Multi_Head_Attention_8,8,1,0.07177119,0.91047215,0.74174,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resnet_Multi_Head_Attention_8,9,1,0.07467494,0.9214394,0.7372047,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resnet_Multi_Head_Attention_8,10,1,0.076810025,0.86623025,0.73607534,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resnet_Multi_Head_Attention_8,11,1,0.083171174,0.895096,0.73271066,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resnet_Multi_Head_Attention_8,12,1,0.09161735,0.8871275,0.72640055,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resnet_Multi_Head_Attention_8,13,1,0.098381475,0.9639446,0.72117144,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resnet_Multi_Head_Attention_8,14,1,0.10262456,1.0078517,0.7164355,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_deeper_8,0,1,0.12569194,0.8742158,0.6462085,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_deeper_8,1,1,0.10835415,0.8510311,0.67318064,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_deeper_8,2,1,0.10311931,0.9715972,0.68348783,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_deeper_8,3,1,0.109387726,0.8150061,0.6805796,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_deeper_8,4,1,0.09900683,0.8478498,0.69675696,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_deeper_8,5,1,0.097977914,0.8381717,0.6983422,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_deeper_8,6,1,0.103525154,0.93067163,0.6942021,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_deeper_8,7,1,0.10236129,0.8266616,0.6945763,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_deeper_8,8,1,0.10210314,0.8807667,0.6961482,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_deeper_8,9,1,0.10320406,0.8231737,0.69677436,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_deeper_8,10,1,0.10224202,0.89520675,0.6994223,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_deeper_8,11,1,0.103995696,0.898332,0.7008654,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_deeper_8,12,1,0.10460363,0.85509443,0.7006971,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_deeper_8,13,1,0.104633026,0.8774315,0.69975746,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Resblock+MultiHead_deeper_8,14,1,0.101124585,0.811289,0.7035401,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Multi_head_BN_8,0,1,0.064045675,0.8362779,0.7641923,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Multi_head_BN_8,1,1,0.09243799,0.87505007,0.7192459,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Multi_head_BN_8,2,1,0.09488926,0.81785935,0.7030737,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Multi_head_BN_8,3,1,0.07875503,0.8146389,0.72580826,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Multi_head_BN_8,4,1,0.07099384,0.8230201,0.73569536,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Multi_head_BN_8,5,1,0.07649737,0.84073937,0.733242,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Multi_head_BN_8,6,1,0.08691256,0.82953393,0.72741175,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Multi_head_BN_8,7,1,0.08785926,0.7943268,0.7277707,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Multi_head_BN_8,8,1,0.08483329,0.8475622,0.72990525,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Multi_head_BN_8,9,1,0.08548195,0.8971126,0.72916245,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Multi_head_BN_8,10,1,0.08673052,0.8291645,0.72678614,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Multi_head_BN_8,11,1,0.08861028,0.84710866,0.7238882,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Multi_head_BN_8,12,1,0.089874536,0.8813104,0.7218551,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Multi_head_BN_8,13,1,0.09325991,0.885607,0.71764785,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+Multi_head_BN_8,14,1,0.09224948,0.85196626,0.7175573,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_with_LN_and_residual_13M_8,0,1,0.19555569,0.8665325,0.63723123,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_with_LN_and_residual_13M_8,1,1,0.17046863,0.8743084,0.6546535,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_with_LN_and_residual_13M_8,2,1,0.15554179,0.85491186,0.6612565,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_with_LN_and_residual_13M_8,3,1,0.14012444,0.8236364,0.67603606,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_with_LN_and_residual_13M_8,4,1,0.13119106,0.8530703,0.68851507,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_with_LN_and_residual_13M_8,5,1,0.13726988,0.8995885,0.6860508,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_with_LN_and_residual_13M_8,6,1,0.14397192,0.87086236,0.6799368,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_with_LN_and_residual_13M_8,7,1,0.14234245,0.8377157,0.68185407,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_with_LN_and_residual_13M_8,8,1,0.1353812,0.837641,0.6882107,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_with_LN_and_residual_13M_8,9,1,0.12873831,0.8063597,0.69564867,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_with_LN_and_residual_13M_8,10,1,0.122343324,0.8404102,0.7019661,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_with_LN_and_residual_13M_8,11,1,0.11972644,0.84342325,0.7043263,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_with_LN_and_residual_13M_8,12,1,0.11631197,0.83602643,0.70759183,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_with_LN_and_residual_13M_8,13,1,0.11382774,0.86737907,0.7106252,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_with_LN_and_residual_13M_8,14,1,0.11397144,0.87980604,0.70971304,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_with_LN_and_residual_13M_8,12,1,0.16843557,0.87486124,0.6731231,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_conv_output_22M_8,0,1,0.042185865,0.7959522,0.7867549,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_conv_output_22M_8,1,1,0.0493926,0.791111,0.7876846,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_conv_output_22M_8,2,1,0.05097492,0.79355234,0.7877951,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_conv_output_22M_8,3,1,0.051822912,0.81554085,0.7861458,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_conv_output_22M_8,4,1,0.052460562,0.8029553,0.7847419,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_conv_output_22M_8,5,1,0.052339055,0.84195983,0.7813728,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_conv_output_22M_8,6,1,0.054401137,0.82272446,0.7763653,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_conv_output_22M_8,7,1,0.05645435,0.8369871,0.77289635,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_conv_output_22M_8,8,1,0.057222497,0.8102052,0.7721748,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_conv_output_22M_8,9,1,0.058127318,0.83080816,0.771759,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_conv_output_22M_8,10,1,0.05968007,0.8117289,0.770655,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_conv_output_22M_8,11,1,0.060074963,0.8132864,0.77018684,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_conv_output_22M_8,12,1,0.059864677,0.8237613,0.7707479,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_conv_output_22M_8,13,1,0.05902716,0.82137513,0.7724363,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_conv_output_22M_8,14,1,0.060311187,0.835289,0.7716334,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_conv_output_22M_8,10,1,0.1674909,0.8624425,0.68851465,nan,nan,nan
+model,epoch,Batch size,KLD,CC,s-AUC,KLD,CC,s-AUC
+MultiHead_conv_output_22M_8,10,1,0.0537445,0.8117289,0.77525145,nan,nan,nan

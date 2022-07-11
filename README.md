@@ -188,3 +188,15 @@ If you used our work, please cite our work:
 ## TODO
 - [] Build a DockerFile for this repository
 - [] Upload a docker image to DokerHub 
+
+
+Models available: ['22M_No_attention_8', '24M_ratio_2_8', '95M', 'Attention_skip_3M_8', 'Attention_skip_8', 'Attention_skip_correct_8', 'Attention_skip_per_layer_8', 'CBAM_8', 'CBAM_88M_8', 'CBAM_simple_disc_8', 'MultiHead_80M_8', 'MultiHead_conv_output_22M_8', 'MultiHead_with_LN_and_residual_13M_8', 'MultiHead_with_output_conv_22M_8', 'Multi_Head_25M_8', 'Multi_Head_deeper_8', 'Multi_Head_deeper_86M_8', 'Multi_Head_end_30M_8', 'Multi_attention_8', 'Multi_head_BN_8', 'Multi_head_constant_learning_rate_8', 'Multi_head_middle_8', 'Multi_head_middle_output_size3_8', 'Multi_head_middle_output_size3_random_jitter_8', 'Resblock+MultiHead_16', 'Resblock+MultiHead_deeper_8', 'Resnet_8', 'Resnet_Attention_8', 'Resnet_Multi_Head_Attention_8', 'Resnet_attention_disc_simple_8', 'Resnet_disc_simple_8', 'Unet_8', 'Unet_disc_simple_8', 'test_results_8', 'teste_output_size_8']
+Select model?                                 
+
+
+MultiHead_80M_8
+Resnet_Multi_Head_Attention_8
+Resblock+MultiHead_deeper_8
+Multi_head_BN_8
+MultiHead_with_LN_and_residual_13M_8     mejor
+MultiHead_conv_output_22M_8   epoch = 10 
