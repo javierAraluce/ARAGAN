@@ -17,7 +17,7 @@ from dataloader_pipeline import Dataloader
 from models import Models
 from typing import Tuple, Type
 
-
+import math 
 from modules import summary_tensorboard, pearson_r
 
 class ARAGAN(object):
@@ -25,7 +25,8 @@ class ARAGAN(object):
         # Buffer size, complete training set length 
         self.BUFFER_SIZE = 98723
         
-        self.BATCH_SIZE = 32
+        multiplier_dgx = 16
+        self.BATCH_SIZE = 32 * multiplier_dgx
         # Each image is 256x256 in size
         self.IMG_WIDTH = 256
         self.IMG_HEIGHT = 256
@@ -42,7 +43,7 @@ class ARAGAN(object):
         self.TOTAL_IMGS = 98723
         self.TOTAL_IMGS_TEST = 32196
         
-        initial_learning_rate=1e-4
+        initial_learning_rate=1e-4 * math.sqrt(multiplier_dgx)
 
         # Cublass error
         gpus = tf.config.experimental.list_physical_devices('GPU')
