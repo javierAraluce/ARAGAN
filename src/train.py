@@ -23,7 +23,7 @@ class ARAGAN(object):
         # Buffer size, complete training set length 
         self.BUFFER_SIZE = 98723
         
-        self.BATCH_SIZE = 8
+        self.BATCH_SIZE = 32
         # Each image is 256x256 in size
         self.IMG_WIDTH = 256
         self.IMG_HEIGHT = 256
@@ -39,6 +39,8 @@ class ARAGAN(object):
         # Number of images in both sets
         self.TOTAL_IMGS = 98723
         self.TOTAL_IMGS_TEST = 32196
+        
+        initial_learning_rate=1e-4
 
         # Cublass error
         gpus = tf.config.experimental.list_physical_devices('GPU')
@@ -66,11 +68,13 @@ class ARAGAN(object):
         # Create the BCE loss
         self.loss_object = tf.keras.losses.BinaryCrossentropy(from_logits=True)
         # Create the KLD metric
-        self.loss_kld = tf.keras.losses.KLDivergence()
+        self.auc = tf.keras.metrics.AUC(num_thresholds=200, curve='ROC')
+        self.kld = tf.keras.metrics.KLDivergence(
+            name='kullback_leibler_divergence', dtype=None)
         
         # Create the schelue for the learning rate
         self.learning_rate = tf.keras.optimizers.schedules.ExponentialDecay(
-            initial_learning_rate=1e-2,
+            initial_learning_rate=initial_learning_rate,
             decay_steps=10000,
             decay_rate=0.9)
         
@@ -94,6 +98,13 @@ class ARAGAN(object):
         self.chekpoint_name =  self.name + "_"+ str(self.BATCH_SIZE) + "/epoch_"
         self.checkpoint_prefix = os.path.join(self.checkpoint_dir, 
                                               self.chekpoint_name)
+        
+        # Compile models
+        self.generator.compile(optimizer = self.generator_optimizer,
+                           loss = self.generator_loss)  
+        self.discriminator.compile(optimizer = self.discriminator_optimizer,
+                           loss = self.discriminator_loss)  
+        
         
     def generator_loss(self, 
                        disc_generated_output: tf.Tensor,
@@ -149,7 +160,30 @@ class ARAGAN(object):
 
         return total_disc_loss
 
+    
+    def pearson_r(self, 
+                  y_true : tf.Tensor,
+                  y_pred : tf.Tensor,):
+        '''_summary_
 
+        Args:
+            y_true (tf.Tensor): _description_
+            y_pred (tf.Tensor): _description_
+
+        Returns:
+            _type_: _description_
+        '''
+        
+        x = y_true
+        y = y_pred
+        mx = tf.reduce_mean(x, axis=1, keepdims=True)
+        my = tf.reduce_mean(y, axis=1, keepdims=True)
+        xm, ym = x - mx, y - my
+        t1_norm = tf.nn.l2_normalize(xm, axis = 1)
+        t2_norm = tf.nn.l2_normalize(ym, axis = 1)
+        cosine = tf.compat.v1.losses.cosine_distance(t1_norm, t2_norm, axis = 1)
+        return cosine
+    
     def calculate_metrics(self,
                           target: tf.Tensor, 
                           gen_output: tf.Tensor) -> Tuple[tf.Tensor, 
@@ -169,7 +203,7 @@ class ARAGAN(object):
         '''
 
         
-        kld_metric =  self.loss_kld(target, gen_output)
+        kld_metric =  self.kld(target, gen_output)
         mae_metric =  tf.keras.metrics.mean_absolute_error(target, gen_output)
         mse_metric =  tf.keras.metrics.mean_squared_error(target, gen_output)
 
@@ -177,9 +211,25 @@ class ARAGAN(object):
         mae_metric = tf.reduce_mean(mae_metric)
         mse_metric = tf.reduce_mean(mse_metric)
 
-        return  kld_metric, mae_metric, mse_metric
+        correlation_coefficient = self.pearson_r(target, gen_output)
+        
+        # correlation_coefficient = self.cross_entropy(target, gen_output)
+        auc = self.auc(target, gen_output)
 
-    @tf.function
+        # s_auc = np.std(auc)
+
+        # print(kld_metric.numpy())
+        
+        return  kld_metric, mae_metric, mse_metric, correlation_coefficient, auc
+
+    shape_img = (None, 256, 256 ,3)
+    signature_inputs = [
+        tf.TensorSpec(shape=shape_img, dtype=tf.float32),
+        tf.TensorSpec(shape=shape_img, dtype=tf.float32),
+        tf.TensorSpec(shape=(), dtype=tf.int64),
+        tf.TensorSpec(shape=(), dtype=tf.int64)]
+    
+    @tf.function(input_signature=signature_inputs)
     def train_step(self,
                    input_image: tf.Tensor,
                    target: tf.Tensor,
@@ -213,7 +263,7 @@ class ARAGAN(object):
                                                  training=True)
 
             # Generator Loss value for this batch
-            gen_total_loss, gen_gan_loss, gen_l1_loss = self.generator_loss(
+            gen_loss, total_loss_gan, gen_l1_loss = self.generator_loss(
                 disc_gen_output, 
                 gen_output, 
                 target)
@@ -223,7 +273,7 @@ class ARAGAN(object):
 
         # Get generator gradients of loss wrt the weights
         generator_gradients = gen_tape.gradient(
-            gen_total_loss,
+            gen_loss,
             self.generator.trainable_variables)
         # Get discriminator gradients of loss wrt the weights
         discriminator_gradients = disc_tape.gradient(
@@ -240,37 +290,26 @@ class ARAGAN(object):
                 self.discriminator.trainable_variables))
 
         # Calculate metrics for this batch
-        kld_metric, mae_metric, mse_metric = self.calculate_metrics(target, 
-                                                                    gen_output)
+        kld_metric, mae_metric, mse_metric, correlation_coefficient, auc \
+            = self.calculate_metrics(target, gen_output)
 
         # Write logs for Tensorboard 
         tensorboard_step = step * self.BATCH_SIZE + epoch * self.TOTAL_IMGS
-        with self.summary_writer.as_default():
-            tf.summary.scalar('gen_total_loss', 
-                              gen_total_loss, 
-                              step = tensorboard_step)
-            tf.summary.scalar('gen_gan_loss',
-                              gen_gan_loss, 
-                              step = tensorboard_step)
-            tf.summary.scalar('gen_l1_loss', 
-                              gen_l1_loss,
-                              step = tensorboard_step)
-            tf.summary.scalar('disc_loss',
-                              disc_loss,
-                              step = tensorboard_step)
-            tf.summary.scalar('kld_metric',
-                              kld_metric, 
-                              step = tensorboard_step)
-            tf.summary.scalar('mae_metric', 
-                              mae_metric,
-                              step = tensorboard_step)
-            tf.summary.scalar('mse_metric',
-                              mse_metric,
-                              step = tensorboard_step)
+        
+        self.summary_tensorboard('Train', 
+                                 tensorboard_step,
+                                 gen_loss,
+                                 disc_loss,
+                                 total_loss_gan,
+                                 kld_metric,
+                                 mae_metric,
+                                 mse_metric, 
+                                 correlation_coefficient, 
+                                 auc)
 
-        return gen_total_loss, gen_gan_loss, disc_loss
+        return gen_loss, total_loss_gan, disc_loss
 
-    def fit(self, train_ds: tf.data.Dataset, test_ds: tf.data.Dataset) -> None:
+    def fit(self, train_ds: tf.data.Dataset, epoch: int) -> None:
         '''Train function to pass the batchs from the dataset to the train step
         procedure
 
@@ -278,32 +317,28 @@ class ARAGAN(object):
             train_ds (tf.data.Dataset): Training dataset
             test_ds (tf.data.Dataset): Testing dataset
         '''
-        # Itreate over epochs 
-        for epoch in range(self.EPOCHS):
-            gen_total_losses = []
-            gen_gan_losses = []
-            disc_losses = []
-            # Iterate the training dataset in batches 
-            for step, (input_image, target) in tqdm(train_ds.enumerate()):
-                gen_total_loss, gen_gan_loss, disc_loss = self.train_step(
-                    input_image, target, step, epoch)
-                # Store losses 
-                gen_total_losses.append(gen_total_loss)
-                gen_gan_losses.append(gen_gan_loss)
-                disc_losses.append(disc_loss)
-
-            self.test(test_ds, epoch)
-            # Save generator for inference
-            self.checkpoint_prefix = os.path.join(
-                self.checkpoint_dir, 
-                self.chekpoint_name + str(epoch))
-            self.generator.save(self.checkpoint_prefix)
-            print ('Saving checkpoint for epoch {}'.format(epoch+1))            
-            print("gen_total_loss {:1.2f}".format(np.mean(gen_total_losses)))
-            print("gen_gan_loss {:1.2f}".format(np.mean(gen_gan_losses)))  
-            print("disc_loss {:1.2f}".format(np.mean(disc_losses)))                                                
+        gen_total_losses = []
+        gen_gan_losses = []
+        disc_losses = []
+        # Iterate the training dataset in batches 
+        str_tqdm = ''.join(('\033[1;34mTraining epoch \033[0;0m', 
+                        str(epoch), '/', str(self.EPOCHS)))
+        for step, (input_image, target) in tqdm(train_ds.enumerate(),
+                desc = str_tqdm,
+                bar_format='{l_bar}{bar:10}{r_bar}{bar:-10b}',
+                dynamic_ncols  = True):
+            gen_total_loss, gen_gan_loss, disc_loss = self.train_step(
+                input_image, target, step, epoch)
+            # Store losses 
+            gen_total_losses.append(gen_total_loss)
+            gen_gan_losses.append(gen_gan_loss)
+            disc_losses.append(disc_loss)
+          
+        print("gen_total_loss {:1.2f}".format(np.mean(gen_total_losses)))
+        print("gen_gan_loss {:1.2f}".format(np.mean(gen_gan_losses)))  
+        print("disc_loss {:1.2f}".format(np.mean(disc_losses)))                                                
                                                         
-    @tf.function
+    @tf.function(input_signature=signature_inputs)
     def test_step(self, 
                   input_image: tf.Tensor, 
                   target: tf.Tensor, 
@@ -319,28 +354,84 @@ class ARAGAN(object):
         '''
         # Test Forward
         gen_output = self.generator(input_image, training=False)
+        
+        disc_real_output = self.discriminator([input_image, target],
+                                              training=True)
+        disc_gen_output = self.discriminator([input_image, gen_output],
+                                             training=True)
 
-        # Calculate metrics
-        l1_metric = tf.reduce_mean(tf.abs(target - gen_output))
-        kld_metric, mae_metric, mse_metric = self.calculate_metrics(target,
-                                                                    gen_output)
+        # Generator Loss value for this batch
+        gen_loss, total_loss_gan, gen_l1_loss = self.generator_loss(
+            disc_gen_output, 
+            gen_output, 
+            target)
+        # Discriminator Loss value for this batch
+        disc_loss = self.discriminator_loss(disc_real_output, 
+                                            disc_gen_output)
+
+        # Calculate metrics for this batch
+        kld_metric, mae_metric, mse_metric, correlation_coefficient, auc \
+            = self.calculate_metrics(target, gen_output)
 
         # Write logs for Tensorboard 
         tensorboard_step = step * self.BATCH_SIZE + epoch * self.TOTAL_IMGS_TEST
+        
+        self.summary_tensorboard('Test', 
+                                 tensorboard_step,
+                                 gen_loss,
+                                 disc_loss,
+                                 total_loss_gan,
+                                 kld_metric,
+                                 mae_metric,
+                                 mse_metric, 
+                                 correlation_coefficient, 
+                                 auc)
+            
+        return kld_metric
+    
+    def summary_tensorboard(self, 
+                            dataset_split, 
+                            tensorboard_step,
+                            gen_loss,
+                            disc_loss,
+                            total_loss_gan,
+                            kld_metric,
+                            mae_metric,
+                            mse_metric, 
+                            correlation_coefficient, 
+                            auc):  
+        
+        lr = self.generator_optimizer.learning_rate
+        
         with self.summary_writer.as_default():
-            tf.summary.scalar('l1_metric_test', 
-                              l1_metric, 
+            tf.summary.scalar(dataset_split + '_gen_loss', 
+                              gen_loss, 
                               step = tensorboard_step)
-            tf.summary.scalar('kld_metric_test',
+            tf.summary.scalar(dataset_split + '_disc_loss', 
+                              disc_loss, 
+                              step = tensorboard_step)
+            tf.summary.scalar(dataset_split + '_total_loss_gan', 
+                              total_loss_gan, 
+                              step = tensorboard_step)
+            tf.summary.scalar(dataset_split + '_lr', 
+                              lr, 
+                              step = tensorboard_step)                             
+            tf.summary.scalar(dataset_split + '_kld_metric',
                               kld_metric,
                               step = tensorboard_step)
-            tf.summary.scalar('mae_metric_test',
+            tf.summary.scalar(dataset_split + '_mae_metric',
                               mae_metric, 
                               step = tensorboard_step)
-            tf.summary.scalar('mse_metric_test', 
+            tf.summary.scalar(dataset_split + '_mse_metric', 
                               mse_metric, 
+                              step = tensorboard_step)  
+            tf.summary.scalar(dataset_split + '_correlation_coefficient', 
+                              correlation_coefficient, 
                               step = tensorboard_step)
-
+            tf.summary.scalar(dataset_split + '_auc', 
+                              auc, 
+                              step = tensorboard_step)                   
+    
     def test(self, test_ds: tf.data.Dataset, epoch: int) -> None:
         '''Test function to pass the batchs from the dataset to the train step
         procedure
@@ -350,45 +441,83 @@ class ARAGAN(object):
             epoch (int): Epoch
         '''
         # Iterate the test dataset in batches for testing
-        for step, (input_image, target) in tqdm(test_ds.enumerate()):
-            self.test_step(input_image, target, step, epoch)
+        str_tqdm = ''.join(('\033[1;34mTesting epoch \033[0;0m', 
+                            str(epoch), '/', str(self.EPOCHS)))
+        kld_metric_list = []
+        for step, (input_image, target) in tqdm(test_ds.enumerate(),
+                 desc = str_tqdm,
+                 bar_format='{l_bar}{bar:10}{r_bar}{bar:-10b}',
+                 dynamic_ncols  = True):
+            kld_metric = self.test_step(input_image, target, step, epoch)
+            kld_metric_list.append(kld_metric)
 
-    def dataset_pipeline(self, dataloader: Dataloader) -> None:
+        return np.mean(kld_metric_list)
+    
+    def dataset_pipeline(self, 
+                         dataloader: Dataloader, 
+                         image_path : str, 
+                         dataset_split : str) -> tf.data.Dataset:
         '''Dataloader pipeline to create training and testing dataset
 
         Args:
             dataloader (Dataloader): dataloader class 
         '''
-        
         # List all the RGB images in the training dataset to create the Dataset
-        PATH = 'dataset/BDDA/'
-        image_path = str(PATH + 'training/camera_images/all_images/*.jpg')
-        self.train_dataset = tf.data.Dataset.list_files(image_path)
-        # Shuffle the images, do this before mapping to use the maximun buffer 
-        self.train_dataset = self.train_dataset.shuffle(self.BUFFER_SIZE)
+        dataset = tf.data.Dataset.list_files(image_path)
+        
+        if dataset_split == 'train':                
+            # Shuffle the images, do this before mapping to use the maximun buffer 
+            dataset = dataset.shuffle(self.BUFFER_SIZE)
+            dataset = dataset.map(dataloader.load_image_train,
+                                  num_parallel_calls=tf.data.AUTOTUNE)  
+        else: 
+            dataset = dataset.map(dataloader.load_image_test)
         # Get the RGB images and the attention map from the dataset
-        self.train_dataset = self.train_dataset.map(
-            dataloader.load_image_train,
-            num_parallel_calls=tf.data.AUTOTUNE)  
+        
         # Create batches with the predefined batch size   
-        self.train_dataset = self.train_dataset.batch(self.BATCH_SIZE)
+        dataset = dataset.batch(self.BATCH_SIZE, drop_remainder = True)
 
-        # Do the same with the testing set, but the shuffle procedure
-        image_path_test = str(PATH + 'test/camera_images/all_images/*.jpg')
-        self.test_dataset = tf.data.Dataset.list_files(image_path_test)
-        self.test_dataset = self.test_dataset.map(dataloader.load_image_test)
-        self.test_dataset = self.test_dataset.batch(self.BATCH_SIZE)
+        return dataset
 
     def main(self) -> None:
         '''Main funtion
         '''
-        self.fit(self.train_dataset, self.test_dataset)
-
+        
+        dataloader = Dataloader(aragan.IMG_WIDTH, 
+                            aragan.IMG_HEIGHT, 
+                            aragan.OUTPUT_CHANNELS)
+        PATH = 'dataset/BDDA/'
+        train_path = str(PATH + 'training/camera_images/all_images/*.jpg')
+        train_dataset = self.dataset_pipeline(dataloader, train_path, 'train')
+        
+        PATH = 'dataset/BDDA/'
+        test_path = str(PATH + 'test/camera_images/all_images/*.jpg')
+        test_dataset = self.dataset_pipeline(dataloader, test_path, 'test')
+        
+        last_test_metric = 0
+        for epoch in range(self.EPOCHS):
+            self.fit(train_dataset, epoch)
+            
+            test_metric = self.test(test_dataset, epoch)
+            # Save generator for inference
+            if test_metric > last_test_metric:
+                last_test_metric = test_metric
+                print('checkpoint_prefix: ',self.checkpoint_dir)
+                if os.path.exists(self.checkpoint_dir):
+                    test = os.listdir(self.checkpoint_dir)
+                    for item in test:
+                        if item.endswith(".h5"):
+                            os.remove(
+                                os.path.join(self.checkpoint_dir, item))
+                checkpoint = ''.join((self.checkpoint_prefix, 
+                                    str(epoch), '.h5'))
+                print('Checkpoint: ',checkpoint)
+                print ('Saving checkpoint for epoch {:1.2f}, \
+                    with kld_metric {:1.2f}'.format(
+                        epoch+1, test_metric))
+                
+                self.generator.save(checkpoint)
 
 if __name__ == "__main__":
     aragan = ARAGAN()
-    dataloader = Dataloader(aragan.IMG_WIDTH, 
-                            aragan.IMG_HEIGHT, 
-                            aragan.OUTPUT_CHANNELS)
-    aragan.dataset_pipeline(dataloader)
-    aragan.fit(aragan.train_dataset, aragan.test_dataset)  
+    aragan.main() 

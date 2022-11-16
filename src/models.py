@@ -250,7 +250,7 @@ class Models(object):
         stride_steps = 8
         upsample_steps = 0
         # Downsample
-        filters = 16
+        filters = 4
         for deep in range(1, stride_steps):    
             if deep % 2 == 0:
                 stride = 2

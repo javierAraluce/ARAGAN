@@ -13,7 +13,7 @@ class Dataloader(object):
         self.IMG_WIDTH = width
         self.IMG_HEIGHT = height  
         self.OUTPUT_CHANNELS = output_channels
-        # tf.config.run_functions_eagerly(True) 
+        tf.config.run_functions_eagerly(False) 
 
     def load(self, image_file: str) -> Tuple[tf.Tensor, tf.Tensor]:
         '''Load dataset function
@@ -164,7 +164,7 @@ class Dataloader(object):
         x = tf.strings.split(image_file, sep='/', maxsplit=-1, name=None)
         x = tf.strings.split(x[5], sep='_', maxsplit=-1, name=None)
         video_name = x[0]
-        return input_image, map_image , video_name, input_image_raw
+        return input_image, map_image #, video_name, input_image_raw
     
     def load_image_test_dada(self, image_file: str) -> Tuple[tf.Tensor, tf.Tensor, tf.Tensor]:
         '''Testing dataloader pipeline
