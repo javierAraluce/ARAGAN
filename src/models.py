@@ -1,5 +1,5 @@
 import tensorflow as tf
-from modules import Modules
+from layers import Custom_Layers
 from typing import Tuple
 
 class Models(object):
@@ -8,7 +8,7 @@ class Models(object):
                  img_width: int, 
                  output_channels: int, 
                  batch_size: int):
-        self.blocks = Modules()
+        self.blocks = Custom_Layers()
         self.IMG_HEIGHT = img_height
         self.IMG_WIDTH = img_width
         self.OUTPUT_CHANNELS = output_channels
