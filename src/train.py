@@ -18,6 +18,8 @@ from models import Models
 from typing import Tuple, Type
 
 
+from modules import summary_tensorboard, pearson_r
+
 class ARAGAN(object):
     def __init__(self):
         # Buffer size, complete training set length 
@@ -65,6 +67,9 @@ class ARAGAN(object):
         self.discriminator = self.models.Discriminator()
         self.discriminator.summary()
         
+        
+        self.name += '_' + input("Hyperparameters: ")
+        
         # Create the BCE loss
         self.loss_object = tf.keras.losses.BinaryCrossentropy(from_logits=True)
         # Create the KLD metric
@@ -104,8 +109,7 @@ class ARAGAN(object):
                            loss = self.generator_loss)  
         self.discriminator.compile(optimizer = self.discriminator_optimizer,
                            loss = self.discriminator_loss)  
-        
-        
+               
     def generator_loss(self, 
                        disc_generated_output: tf.Tensor,
                        gen_output: tf.Tensor, 
@@ -158,31 +162,7 @@ class ARAGAN(object):
 
         total_disc_loss = real_loss + generated_loss
 
-        return total_disc_loss
-
-    
-    def pearson_r(self, 
-                  y_true : tf.Tensor,
-                  y_pred : tf.Tensor,):
-        '''_summary_
-
-        Args:
-            y_true (tf.Tensor): _description_
-            y_pred (tf.Tensor): _description_
-
-        Returns:
-            _type_: _description_
-        '''
-        
-        x = y_true
-        y = y_pred
-        mx = tf.reduce_mean(x, axis=1, keepdims=True)
-        my = tf.reduce_mean(y, axis=1, keepdims=True)
-        xm, ym = x - mx, y - my
-        t1_norm = tf.nn.l2_normalize(xm, axis = 1)
-        t2_norm = tf.nn.l2_normalize(ym, axis = 1)
-        cosine = tf.compat.v1.losses.cosine_distance(t1_norm, t2_norm, axis = 1)
-        return cosine
+        return total_disc_loss 
     
     def calculate_metrics(self,
                           target: tf.Tensor, 
@@ -211,7 +191,7 @@ class ARAGAN(object):
         mae_metric = tf.reduce_mean(mae_metric)
         mse_metric = tf.reduce_mean(mse_metric)
 
-        correlation_coefficient = self.pearson_r(target, gen_output)
+        correlation_coefficient = pearson_r(target, gen_output)
         
         # correlation_coefficient = self.cross_entropy(target, gen_output)
         auc = self.auc(target, gen_output)
@@ -296,16 +276,18 @@ class ARAGAN(object):
         # Write logs for Tensorboard 
         tensorboard_step = step * self.BATCH_SIZE + epoch * self.TOTAL_IMGS
         
-        self.summary_tensorboard('Train', 
-                                 tensorboard_step,
-                                 gen_loss,
-                                 disc_loss,
-                                 total_loss_gan,
-                                 kld_metric,
-                                 mae_metric,
-                                 mse_metric, 
-                                 correlation_coefficient, 
-                                 auc)
+        summary_tensorboard(self.summary_writer,
+                            'Train', 
+                            tensorboard_step,
+                            gen_loss,
+                            disc_loss,
+                            total_loss_gan,
+                            kld_metric,
+                            mae_metric,
+                            mse_metric, 
+                            correlation_coefficient, 
+                            auc,
+                            self.generator_optimizer.learning_rate)
 
         return gen_loss, total_loss_gan, disc_loss
 
@@ -376,21 +358,8 @@ class ARAGAN(object):
         # Write logs for Tensorboard 
         tensorboard_step = step * self.BATCH_SIZE + epoch * self.TOTAL_IMGS_TEST
         
-        self.summary_tensorboard('Test', 
-                                 tensorboard_step,
-                                 gen_loss,
-                                 disc_loss,
-                                 total_loss_gan,
-                                 kld_metric,
-                                 mae_metric,
-                                 mse_metric, 
-                                 correlation_coefficient, 
-                                 auc)
-            
-        return kld_metric
-    
-    def summary_tensorboard(self, 
-                            dataset_split, 
+        summary_tensorboard(self.summary_writer,
+                            'Test', 
                             tensorboard_step,
                             gen_loss,
                             disc_loss,
@@ -399,39 +368,11 @@ class ARAGAN(object):
                             mae_metric,
                             mse_metric, 
                             correlation_coefficient, 
-                            auc):  
-        
-        lr = self.generator_optimizer.learning_rate
-        
-        with self.summary_writer.as_default():
-            tf.summary.scalar(dataset_split + '_gen_loss', 
-                              gen_loss, 
-                              step = tensorboard_step)
-            tf.summary.scalar(dataset_split + '_disc_loss', 
-                              disc_loss, 
-                              step = tensorboard_step)
-            tf.summary.scalar(dataset_split + '_total_loss_gan', 
-                              total_loss_gan, 
-                              step = tensorboard_step)
-            tf.summary.scalar(dataset_split + '_lr', 
-                              lr, 
-                              step = tensorboard_step)                             
-            tf.summary.scalar(dataset_split + '_kld_metric',
-                              kld_metric,
-                              step = tensorboard_step)
-            tf.summary.scalar(dataset_split + '_mae_metric',
-                              mae_metric, 
-                              step = tensorboard_step)
-            tf.summary.scalar(dataset_split + '_mse_metric', 
-                              mse_metric, 
-                              step = tensorboard_step)  
-            tf.summary.scalar(dataset_split + '_correlation_coefficient', 
-                              correlation_coefficient, 
-                              step = tensorboard_step)
-            tf.summary.scalar(dataset_split + '_auc', 
-                              auc, 
-                              step = tensorboard_step)                   
-    
+                            auc,
+                            self.generator_optimizer.learning_rate)
+            
+        return kld_metric, mae_metric, mse_metric, correlation_coefficient, auc
+                      
     def test(self, test_ds: tf.data.Dataset, epoch: int) -> None:
         '''Test function to pass the batchs from the dataset to the train step
         procedure
@@ -443,15 +384,30 @@ class ARAGAN(object):
         # Iterate the test dataset in batches for testing
         str_tqdm = ''.join(('\033[1;34mTesting epoch \033[0;0m', 
                             str(epoch), '/', str(self.EPOCHS)))
-        kld_metric_list = []
+        kld_metric_list, mae_metric_list, mse_metric_list, \
+            correlation_coefficient_list, auc_list = [], [], [], [], []
         for step, (input_image, target) in tqdm(test_ds.enumerate(),
                  desc = str_tqdm,
                  bar_format='{l_bar}{bar:10}{r_bar}{bar:-10b}',
                  dynamic_ncols  = True):
-            kld_metric = self.test_step(input_image, target, step, epoch)
+            kld_metric, mae_metric, mse_metric, correlation_coefficient, auc \
+                = self.test_step(input_image, target, step, epoch)
+                
             kld_metric_list.append(kld_metric)
+            mae_metric_list.append(mae_metric)
+            mse_metric_list.append(mse_metric)
+            correlation_coefficient_list.append(correlation_coefficient)
+            auc_list.append(auc)
+            
+        print("KLD {:1.2f}".format(np.mean(kld_metric_list)))
+        print("MAE {:1.2f}".format(np.mean(mae_metric_list)))  
+        print("MSE {:1.2f}".format(np.mean(mse_metric_list)))
+        print("CC {:1.2f}".format(np.mean(correlation_coefficient_list)))
+        print("AUC {:1.2f}".format(np.mean(auc_list)))
 
-        return np.mean(kld_metric_list)
+        return np.mean(kld_metric_list), np.mean(mae_metric_list), \
+            np.mean(mse_metric_list) ,np.mean(correlation_coefficient_list), \
+            np.mean(auc_list)
     
     def dataset_pipeline(self, 
                          dataloader: Dataloader, 
@@ -495,28 +451,34 @@ class ARAGAN(object):
         test_dataset = self.dataset_pipeline(dataloader, test_path, 'test')
         
         last_test_metric = 0
+    
         for epoch in range(self.EPOCHS):
-            self.fit(train_dataset, epoch)
-            
-            test_metric = self.test(test_dataset, epoch)
+            self.fit(train_dataset, epoch)            
+            kld_metric, mae_metric, mse_metric, correlation_coefficient, auc \
+                 = self.test(test_dataset, epoch)
+                 
+                 
             # Save generator for inference
-            if test_metric > last_test_metric:
-                last_test_metric = test_metric
-                print('checkpoint_prefix: ',self.checkpoint_dir)
-                if os.path.exists(self.checkpoint_dir):
-                    test = os.listdir(self.checkpoint_dir)
-                    for item in test:
-                        if item.endswith(".h5"):
-                            os.remove(
-                                os.path.join(self.checkpoint_dir, item))
-                checkpoint = ''.join((self.checkpoint_prefix, 
-                                    str(epoch), '.h5'))
-                print('Checkpoint: ',checkpoint)
-                print ('Saving checkpoint for epoch {:1.2f}, \
-                    with kld_metric {:1.2f}'.format(
-                        epoch+1, test_metric))
+            # if test_metric > last_test_metric:
+            #     last_test_metric = test_metric
                 
-                self.generator.save(checkpoint)
+            # print('checkpoint_prefix: ',self.checkpoint_dir)
+            # if os.path.exists(self.checkpoint_dir):
+            #     test = os.listdir(self.checkpoint_dir)
+            #     for item in test:
+            #         if item.endswith(".h5"):
+            #             os.remove(
+            #                 os.path.join(self.checkpoint_dir, item))
+            checkpoint = ''.join((self.checkpoint_prefix, 
+                                str(epoch), '.h5'))
+            print('Checkpoint: ',checkpoint)
+            print ('Saving checkpoint for epoch {:1.3f}, \
+                with kld_metric {:1.3f}, mae_metric {:1.3f}, mse_metric {:1.3f},\
+                    correlation_coefficient {:1.3f}, auc {:1.3f},'.format(
+                    epoch+1, kld_metric, mae_metric, 
+                    mse_metric, correlation_coefficient, auc))
+            
+            self.generator.save(checkpoint)
 
 if __name__ == "__main__":
     aragan = ARAGAN()
