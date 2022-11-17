@@ -17,6 +17,8 @@ from dataloader_pipeline import Dataloader
 from models import Models
 from typing import Tuple, Type
 
+import logging
+
 import math 
 from modules import summary_tensorboard, pearson_r
 
@@ -25,7 +27,7 @@ class ARAGAN(object):
         # Buffer size, complete training set length 
         self.BUFFER_SIZE = 98723
         
-        multiplier_dgx = 16
+        multiplier_dgx = 2
         self.BATCH_SIZE = 32 * multiplier_dgx
         # Each image is 256x256 in size
         self.IMG_WIDTH = 256
@@ -59,7 +61,7 @@ class ARAGAN(object):
         # Search the models available to be choose by the developer 
         method_list = [method for method in dir(Models) 
                        if method.startswith('__') is False]
-        print('\033[1;32m Models available: \033[0;0m', method_list)
+        print('\033[1;32mModels available: \033[0;0m', method_list)
         # Choose the Generator architecture from the list
         self.name = input('Choose the Generator from the list above: ')
         
@@ -109,7 +111,20 @@ class ARAGAN(object):
         self.generator.compile(optimizer = self.generator_optimizer,
                            loss = self.generator_loss)  
         self.discriminator.compile(optimizer = self.discriminator_optimizer,
-                           loss = self.discriminator_loss)  
+                           loss = self.discriminator_loss) 
+        
+        # logging_file = os.path.join('training_checkpoints',
+        #                             self.name + "_"+ str(self.BATCH_SIZE),
+        #                             'logging_file.log')
+        logging_file = ''.join(('training_checkpoints/',
+                                self.name + "_"+ str(self.BATCH_SIZE),
+                                '/logging_file.log'))
+        os.makedirs(''.join(('training_checkpoints/',
+                                self.name + "_"+ str(self.BATCH_SIZE))))
+        logging.basicConfig(filename=logging_file, 
+                            filemode='w', 
+                            level=logging.INFO, 
+                            force=True)
                
     def generator_loss(self, 
                        disc_generated_output: tf.Tensor,
@@ -319,7 +334,10 @@ class ARAGAN(object):
           
         print("gen_total_loss {:1.2f}".format(np.mean(gen_total_losses)))
         print("gen_gan_loss {:1.2f}".format(np.mean(gen_gan_losses)))  
-        print("disc_loss {:1.2f}".format(np.mean(disc_losses)))                                                
+        print("disc_loss {:1.2f}".format(np.mean(disc_losses)))
+        logging.info("gen_total_loss {:1.2f}".format(np.mean(gen_total_losses)))
+        logging.info("gen_gan_loss {:1.2f}".format(np.mean(gen_gan_losses)))
+        logging.info("disc_loss {:1.2f}".format(np.mean(disc_losses)))                                                
                                                         
     @tf.function(input_signature=signature_inputs)
     def test_step(self, 
@@ -405,6 +423,12 @@ class ARAGAN(object):
         print("MSE {:1.2f}".format(np.mean(mse_metric_list)))
         print("CC {:1.2f}".format(np.mean(correlation_coefficient_list)))
         print("AUC {:1.2f}".format(np.mean(auc_list)))
+        
+        logging.info("KLD {:1.2f}".format(np.mean(kld_metric_list)))
+        logging.info("MAE {:1.2f}".format(np.mean(mae_metric_list)))
+        logging.info("MSE {:1.2f}".format(np.mean(mse_metric_list)))
+        logging.info("CC {:1.2f}".format(np.mean(correlation_coefficient_list)))
+        logging.info("AUC {:1.2f}".format(np.mean(auc_list)))
 
         return np.mean(kld_metric_list), np.mean(mae_metric_list), \
             np.mean(mse_metric_list) ,np.mean(correlation_coefficient_list), \
@@ -473,6 +497,11 @@ class ARAGAN(object):
             checkpoint = ''.join((self.checkpoint_prefix, 
                                 str(epoch), '.h5'))
             print('Checkpoint: ',checkpoint)
+            logging.info('Saving checkpoint for epoch {:1.3f}, \
+                with kld_metric {:1.3f}, mae_metric {:1.3f}, mse_metric {:1.3f},\
+                    correlation_coefficient {:1.3f}, auc {:1.3f},'.format(
+                    epoch+1, kld_metric, mae_metric, 
+                    mse_metric, correlation_coefficient, auc))
             print ('Saving checkpoint for epoch {:1.3f}, \
                 with kld_metric {:1.3f}, mae_metric {:1.3f}, mse_metric {:1.3f},\
                     correlation_coefficient {:1.3f}, auc {:1.3f},'.format(
