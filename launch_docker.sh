@@ -63,7 +63,7 @@ create_new_container()
 		done
 	else 	
 	# Single tab       
-		docker run -it \
+		docker run -itd \
 			--net host \
 			"${FLAGS[@]}" \
 			--name=$2 \
@@ -75,7 +75,7 @@ create_new_container()
 			--group-add $(getent group audio | cut -d: -f3) \
 			-v /tmp/.X11-unix:/tmp/.X11-unix \
 			-v $shared \
-			-e DISPLAY=unix$DISPLAY $1 /bin/bash
+			-e DISPLAY=unix$DISPLAY $1 
 	fi
 }
 
